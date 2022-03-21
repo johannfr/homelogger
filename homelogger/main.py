@@ -134,4 +134,4 @@ def main(
 
 
 if __name__ == "__main__":
-    main(auto_envvar_prefix="homelogger")
+    main(auto_envvar_prefix="HOMELOGGER")
