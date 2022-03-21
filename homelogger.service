@@ -20,7 +20,7 @@ Group=homelogger
 # Environment="HOMELOGGER_INFLUX_PASSWORD="
 # Environment="HOMELOGGER_INFLUX_DATABASE=homelogger"
 
-ExecStart=/usr/local/bin/homelogger
+ExecStart=/opt/homelogger/venv/bin/homelogger
 
 [Install}
 WantedBy=multi-user.target
