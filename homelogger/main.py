@@ -90,8 +90,8 @@ def periodic_inject_from_cache(mqtt_client, influx_client, cache):
 @click.option("--mqtt-password", default=None)
 @click.option("--influx-hostname", default="localhost")
 @click.option("--influx-port", default=8086)
-@click.option("--influx-username", default=None)
-@click.option("--influx-password", default=None)
+@click.option("--influx-username", default=None, envvar="HOMELOGGER_INFLUX_USERNAME")
+@click.option("--influx-password", default=None, envvar="HOMELOGGER_INFLUX_PASSWORD")
 @click.option("--influx-database", default="homelogger")
 def main(
     mqtt_hostname,
@@ -134,4 +134,4 @@ def main(
 
 
 if __name__ == "__main__":
-    main(auto_envvar_prefix="HOMELOGGER")
+    main()
