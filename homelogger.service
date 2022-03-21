@@ -1,0 +1,26 @@
+[Unit]
+Description=HomeLogger logs multiple MQTT topics to InfluxDB
+After=network.target
+
+[Service]
+Restart=on-failure
+RestartSec=5s
+User=homelogger
+Group=homelogger
+
+# Environment variables and their default values.
+# Environment="HOMELOGGER_MQTT_HOSTNAME=localhost"
+# Environment="HOMELOGGER_MQTT_PORT=1883"
+# Environment="HOMELOGGER_MQTT_USERNAME="
+# Environment="HOMELOGGER_MQTT_PASSWORD="
+# Environment="HOMELOGGER_MQTT_KEEPALIVE=60"
+# Environment="HOMELOGGER_INFLUX_HOSTNAME=localhost"
+# Environment="HOMELOGGER_INFLUX_PORT=8086"
+# Environment="HOMELOGGER_INFLUX_USERNAME="
+# Environment="HOMELOGGER_INFLUX_PASSWORD="
+# Environment="HOMELOGGER_INFLUX_DATABASE=homelogger"
+
+ExecStart=/usr/local/bin/homelogger
+
+[Install}
+WantedBy=multi-user.target
