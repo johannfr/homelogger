@@ -82,17 +82,24 @@ def periodic_inject_from_cache(mqtt_client, influx_client, cache):
         sleep(1)
 
 
+# This envvars business is a bit of a mess, but auto_envvars_prefix wasn't working
+# because of a mismatch between dashes and underscores and systemd not liking dashes
+# in Environment definitions.
 @click.command()
-@click.option("--mqtt-hostname", default="localhost")
-@click.option("--mqtt-port", default=1883)
-@click.option("--mqtt-keepalive", default=60)
-@click.option("--mqtt-username", default=None)
-@click.option("--mqtt-password", default=None)
-@click.option("--influx-hostname", default="localhost")
-@click.option("--influx-port", default=8086)
+@click.option("--mqtt-hostname", default="localhost", envvar="HOMELOGGER_MQTT_HOSTNAME")
+@click.option("--mqtt-port", default=1883, envvar="HOMELOGGER_MQTT_PORT")
+@click.option("--mqtt-keepalive", default=60, envvar="HOMELOGGER_MQTT_KEEPALIVE")
+@click.option("--mqtt-username", default=None, envvar="HOMELOGGER_MQTT_USERNAME")
+@click.option("--mqtt-password", default=None, envvar="HOMELOGGER_MQTT_PASSWORD")
+@click.option(
+    "--influx-hostname", default="localhost", envvar="HOMELOGGER_INFLUX_HOSTNAME"
+)
+@click.option("--influx-port", default=8086, envvar="HOMELOGGER_INFLUX_PORT")
 @click.option("--influx-username", default=None, envvar="HOMELOGGER_INFLUX_USERNAME")
 @click.option("--influx-password", default=None, envvar="HOMELOGGER_INFLUX_PASSWORD")
-@click.option("--influx-database", default="homelogger")
+@click.option(
+    "--influx-database", default="homelogger", envvar="HOMELOGGER_INFLUX_DATABASE"
+)
 def main(
     mqtt_hostname,
     mqtt_port,
