@@ -24,6 +24,8 @@ Then copy the homelogger.service file to /lib/systemd/system (or another systemd
 
 ```bash
 cp homelogger.service /lib/systemd/system
+# Edit /lib/systemd/system/homelogger.service
+systemctl daemon-reload
 systemctl enable homelogger
 systemctl start homelogger
 ```
