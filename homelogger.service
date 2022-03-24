@@ -20,7 +20,8 @@ Group=homelogger
 # Environment="HOMELOGGER_INFLUX_PASSWORD="
 # Environment="HOMELOGGER_INFLUX_DATABASE=homelogger"
 
-ExecStart=/opt/homelogger/venv/bin/homelogger
+WorkingDirectory=/opt/homelogger
+ExecStart=/usr/local/bin/poetry run homelogger
 
 [Install}
 WantedBy=multi-user.target
