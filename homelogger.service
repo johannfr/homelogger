@@ -23,5 +23,5 @@ Group=homelogger
 WorkingDirectory=/opt/homelogger
 ExecStart=/usr/local/bin/poetry run homelogger
 
-[Install}
+[Install]
 WantedBy=multi-user.target
