@@ -17,7 +17,7 @@ pip3 install poetry
 cd /opt
 git clone http://github.com/johannfr/homelogger
 cd homelogger
-poetry install --no-dev
+sudo -u homelogger poetry install --no-dev
 ```
 
 Then copy the homelogger.service file to /lib/systemd/system (or another systemd directory of your liking), update necessary environment variables, enable it and run it.
