@@ -14,7 +14,7 @@ else:
     logging.basicConfig(level=logging.INFO)
 
 LOG = logging.getLogger("homelogger")
-LOG.setLevel(logging.DEBUG)
+# LOG.setLevel(logging.DEBUG)
 
 
 def on_mqtt_connect(client, userdata, flags, rc):
