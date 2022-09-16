@@ -64,9 +64,7 @@ def on_mqtt_message(client, userdata, msg):
     )
 
     LOG.debug(f"{msg.topic}: {measurement_name}")
-    measurement_data = [
-        {"measurement": measurement_name, "fields": json.dumps(measurement_fields)}
-    ]
+    measurement_data = [{"measurement": measurement_name, "fields": measurement_fields}]
     cache[msg.topic] = (pendulum.now(), measurement_data)
     try:
         influx_client.write_points(measurement_data)
@@ -83,7 +81,7 @@ def periodic_inject_from_cache(mqtt_client, influx_client, cache):
                 try:
                     influx_client.write_points(measurement_data)
                 except Exception as e:
-                    LOG.error(f"Unable to write value: {e})")
+                    LOG.error(f"Unable to write cached value: {e})")
                 cache[topic] = (pendulum.now(), measurement_data)
         sleep(1)
 
