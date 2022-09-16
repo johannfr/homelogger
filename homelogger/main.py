@@ -53,9 +53,13 @@ def on_mqtt_message(client, userdata, msg):
     elif topic_fields[1] == "motion":
         relevant_fields = [topic_fields[1], topic_fields[2]]
         measurement_fields = json.loads(payload)
+        LOG.debug("Motion payload:")
+        LOG.debug(measurement_fields)
     elif topic_fields[1] == "trv":
         relevant_fields = [topic_fields[1], topic_fields[2]]
         measurement_fields = json.loads(payload)
+        LOG.debug("TRV payload:")
+        LOG.debug(measurement_fields)
     else:
         LOG.error(f"Unable to process topic: {msg.topic}")
 
