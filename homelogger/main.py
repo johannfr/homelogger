@@ -29,6 +29,7 @@ def on_mqtt_connect(client, userdata, flags, rc):
     client.subscribe("shellies/utils/+/relay/+")
     client.subscribe("shellies/+/+/sensor/+")
     client.subscribe("shellies/motion/+/status")
+    client.subscribe("shellies/trv/+/status")
 
 
 def on_mqtt_message(client, userdata, msg):
@@ -50,6 +51,9 @@ def on_mqtt_message(client, userdata, msg):
         relevant_fields = [topic_fields[1], topic_fields[-3], topic_fields[-1]]
         measurement_fields = {"value": payload}
     elif topic_fields[1] == "motion":
+        relevant_fields = [topic_fields[1], topic_fields[2]]
+        measurement_fields = json.loads(payload)
+    elif topic_fields[1] == "trv":
         relevant_fields = [topic_fields[1], topic_fields[2]]
         measurement_fields = json.loads(payload)
     else:
