@@ -64,7 +64,9 @@ def on_mqtt_message(client, userdata, msg):
     )
 
     LOG.debug(f"{msg.topic}: {measurement_name}")
-    measurement_data = [{"measurement": measurement_name, "fields": measurement_fields}]
+    measurement_data = [
+        {"measurement": measurement_name, "fields": json.dumps(measurement_fields)}
+    ]
     cache[msg.topic] = (pendulum.now(), measurement_data)
     try:
         influx_client.write_points(measurement_data)
