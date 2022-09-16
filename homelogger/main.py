@@ -57,7 +57,12 @@ def on_mqtt_message(client, userdata, msg):
         LOG.debug(measurement_fields)
     elif topic_fields[1] == "trv":
         relevant_fields = [topic_fields[1], topic_fields[2]]
-        measurement_fields = json.loads(payload)
+        trv_status = json.loads(payload)
+        measurement_fields = {
+            "temperature": trv_status["tmp"]["value"],
+            "setpoint": trv_status["target_t"]["value"],
+            "bat": trv_status["bat"],
+        }
         LOG.debug("TRV payload:")
         LOG.debug(measurement_fields)
     else:
