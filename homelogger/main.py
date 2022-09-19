@@ -80,11 +80,6 @@ def on_mqtt_message(client, userdata, msg):
         measurement_fields = {
             "value": wiz_data["state"],
             "state": wiz_data["state"],
-            "r": wiz_data["rgbw"]["r"],
-            "g": wiz_data["rgbw"]["g"],
-            "b": wiz_data["rgbw"]["b"],
-            "w": wiz_data["rgbw"]["w"],
-            "brightness": wiz_data["brightness"],
         }
     else:
         LOG.error(f"Unable to process topic: {msg.topic}")
