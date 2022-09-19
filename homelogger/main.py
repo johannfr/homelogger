@@ -26,6 +26,7 @@ def on_mqtt_connect(client, userdata, flags, rc):
 
     client.subscribe("shellies/lights/+/+/relay/+")
     client.subscribe("shellies/lights/+/+/light/+")
+    client.subscribe("shellies/lights/+/+/color/+/status")
     client.subscribe("shellies/utils/+/relay/+")
     client.subscribe("shellies/+/+/sensor/+")
     client.subscribe("shellies/motion/+/status")
@@ -66,6 +67,10 @@ def on_mqtt_message(client, userdata, msg):
         }
         LOG.debug("TRV payload:")
         LOG.debug(measurement_fields)
+    elif topic_fields[-3] == "color":
+        relevant_fields = [topic_fields[2], topic_fields[3], topic_fields[5]]
+        measurement_data = json.loads(payload)
+        measurement_data["value"] = "on" if measurement_data["ison"] else "off"
     else:
         LOG.error(f"Unable to process topic: {msg.topic}")
 
