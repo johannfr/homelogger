@@ -76,8 +76,16 @@ def on_mqtt_message(client, userdata, msg):
         measurement_fields["value"] = "on" if measurement_fields["ison"] else "off"
     elif topic_fields[0] == "wiz" and topic_fields[-1] == "command":
         relevant_fields = [topic_fields[1], topic_fields[2]]
-        measurement_fields = json.loads(payload)
-        measurement_fields["value"] = measurement_fields["state"]
+        wiz_data = json.loads(payload)
+        measurement_fields = {
+            "value": wiz_data["state"],
+            "state": wiz_data["state"],
+            "r": wiz_data["rgbw"]["r"],
+            "g": wiz_data["rgbw"]["g"],
+            "b": wiz_data["rgbw"]["b"],
+            "w": wiz_data["rgbw"]["w"],
+            "brightness": wiz_data["brightness"],
+        }
     else:
         LOG.error(f"Unable to process topic: {msg.topic}")
 
