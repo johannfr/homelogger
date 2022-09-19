@@ -69,8 +69,8 @@ def on_mqtt_message(client, userdata, msg):
         LOG.debug(measurement_fields)
     elif topic_fields[-3] == "color":
         relevant_fields = [topic_fields[2], topic_fields[3], topic_fields[5]]
-        measurement_data = json.loads(payload)
-        measurement_data["value"] = "on" if measurement_data["ison"] else "off"
+        measurement_fields = json.loads(payload)
+        measurement_fields["value"] = "on" if measurement_data["ison"] else "off"
     else:
         LOG.error(f"Unable to process topic: {msg.topic}")
 
