@@ -29,7 +29,7 @@ def on_mqtt_connect(client, userdata, flags, rc):
     client.subscribe("shellies/utils/+/relay/+")
     client.subscribe("shellies/+/+/sensor/+")
     client.subscribe("shellies/motion/+/status")
-    client.subscribe("shellies/trv/+/status")
+    client.subscribe("shellies/trv/+/info")
 
 
 def on_mqtt_message(client, userdata, msg):
@@ -59,9 +59,10 @@ def on_mqtt_message(client, userdata, msg):
         relevant_fields = [topic_fields[1], topic_fields[2]]
         trv_status = json.loads(payload)
         measurement_fields = {
-            "temperature": trv_status["tmp"]["value"],
-            "setpoint": trv_status["target_t"]["value"],
-            "bat": trv_status["bat"],
+            "temperature": trv_status["thermostats"][0]["tmp"]["value"],
+            "setpoint": trv_status["thermostats"][0]["target_t"]["value"],
+            "pos": trv_status["thermostats"][0]["pos"],
+            "bat": trv_status["bat"]["value"],
         }
         LOG.debug("TRV payload:")
         LOG.debug(measurement_fields)
