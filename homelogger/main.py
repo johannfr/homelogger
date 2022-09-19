@@ -31,6 +31,12 @@ def on_mqtt_connect(client, userdata, flags, rc):
     client.subscribe("shellies/+/+/sensor/+")
     client.subscribe("shellies/motion/+/status")
     client.subscribe("shellies/trv/+/info")
+    client.subscribe(
+        "wiz/+/+/command"
+    )  # This is a command-topic rather than a status-topic.
+
+
+wiz / svefnh / rum / command
 
 
 def on_mqtt_message(client, userdata, msg):
@@ -71,6 +77,10 @@ def on_mqtt_message(client, userdata, msg):
         relevant_fields = [topic_fields[2], topic_fields[3], topic_fields[5]]
         measurement_fields = json.loads(payload)
         measurement_fields["value"] = "on" if measurement_fields["ison"] else "off"
+    elif topic_fields[0] == "wiz" and topic_fields[-1] == "command":
+        relevant_fields = [topic_fields[1], topic_fields[2]]
+        measurement_fields = json.loads(payload)
+        measurement_fields["value"] = measurement_fields["state"]
     else:
         LOG.error(f"Unable to process topic: {msg.topic}")
 
