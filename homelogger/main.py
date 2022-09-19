@@ -36,9 +36,6 @@ def on_mqtt_connect(client, userdata, flags, rc):
     )  # This is a command-topic rather than a status-topic.
 
 
-wiz / svefnh / rum / command
-
-
 def on_mqtt_message(client, userdata, msg):
     influx_client, cache = userdata
     try:
