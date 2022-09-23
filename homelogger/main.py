@@ -28,6 +28,8 @@ def on_mqtt_connect(client, userdata, flags, rc):
     client.subscribe("shellies/lights/+/+/light/+")
     client.subscribe("shellies/lights/+/+/color/+/status")
     client.subscribe("shellies/utils/+/relay/+")
+    client.subscribe("shellies/utils/+/relay/+/power")
+    client.subscribe("shellies/utils/+/relay/+/energy")
     client.subscribe("shellies/+/+/sensor/+")
     client.subscribe("shellies/motion/+/status")
     client.subscribe("shellies/trv/+/info")
@@ -48,7 +50,15 @@ def on_mqtt_message(client, userdata, msg):
 
     topic_fields = msg.topic.split("/")
     LOG.debug(f"{msg.topic}: {msg.payload.decode('utf-8')}")
-    if topic_fields[-2] in ["relay", "light"]:
+    if topic_fields[-1] in ["power", "energy"]:
+        relevant_fields = [
+            topic_fields[-5],
+            topic_fields[-4],
+            topic_fields[-2],
+            topic_fields[-1],
+        ]
+        measurement_fields = {"value": payload}
+    elif topic_fields[-2] in ["relay", "light"]:
         relevant_fields = [topic_fields[-4], topic_fields[-3], topic_fields[-1]]
         measurement_fields = {"value": payload}
     elif topic_fields[1] in ["dw", "ht"]:
