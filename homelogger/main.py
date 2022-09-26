@@ -36,6 +36,7 @@ def on_mqtt_connect(client, userdata, flags, rc):
     client.subscribe(
         "wiz/+/+/command"
     )  # This is a command-topic rather than a status-topic.
+    client.subscribe("home/+")
 
 
 def on_mqtt_message(client, userdata, msg):
@@ -91,6 +92,9 @@ def on_mqtt_message(client, userdata, msg):
             "value": wiz_data["state"],
             "state": wiz_data["state"],
         }
+    elif topic_fields[0] == "home":
+        relevant_fields = [topic_fields[0], topic_fields[1]]
+        measurement_fields = {"value": payload}
     else:
         LOG.error(f"Unable to process topic: {msg.topic}")
 
