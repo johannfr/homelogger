@@ -81,7 +81,7 @@ def on_mqtt_message(client, userdata, msg):
         }
         LOG.debug("TRV payload:")
         LOG.debug(measurement_fields)
-    elif topic_fields[-3] == "color":
+    elif len(topic_fields) >= 3 and topic_fields[-3] == "color":
         relevant_fields = [topic_fields[2], topic_fields[3], topic_fields[5]]
         measurement_fields = json.loads(payload)
         measurement_fields["value"] = "on" if measurement_fields["ison"] else "off"
