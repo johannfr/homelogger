@@ -24,19 +24,19 @@ def on_mqtt_connect(client, userdata, flags, rc):
     remote_port = mqtt_socket.getpeername()[1]
     LOG.info(f"Connected to MQTT-broker: [{remote_host}]:[{remote_port}]")
 
-    client.subscribe("shellies/lights/+/+/relay/+")
-    client.subscribe("shellies/lights/+/+/light/+")
-    client.subscribe("shellies/lights/+/+/color/+/status")
-    client.subscribe("shellies/utils/+/relay/+")
-    client.subscribe("shellies/utils/+/relay/+/power")
-    client.subscribe("shellies/utils/+/relay/+/energy")
-    client.subscribe("shellies/+/+/sensor/+")
-    client.subscribe("shellies/motion/+/status")
-    client.subscribe("shellies/trv/+/info")
+    client.subscribe("shellies/lights/+/+/relay/+", qos=1)
+    client.subscribe("shellies/lights/+/+/light/+", qos=1)
+    client.subscribe("shellies/lights/+/+/color/+/status", qos=1)
+    client.subscribe("shellies/utils/+/relay/+", qos=1)
+    client.subscribe("shellies/utils/+/relay/+/power", qos=1)
+    client.subscribe("shellies/utils/+/relay/+/energy", qos=1)
+    client.subscribe("shellies/+/+/sensor/+", qos=1)
+    client.subscribe("shellies/motion/+/status", qos=1)
+    client.subscribe("shellies/trv/+/info", qos=1)
     client.subscribe(
-        "wiz/+/+/command"
+        "wiz/+/+/command", qos=1
     )  # This is a command-topic rather than a status-topic.
-    client.subscribe("home/+")
+    client.subscribe("home/+", qos=1)
 
 
 def on_mqtt_message(client, userdata, msg):
